@@ -1,16 +1,24 @@
 import _ from "lodash"
 import {
   READ_EVENTS,
-  DELETE_EVENT
+  CREATE_EVENT,
+  READ_EVENT,
+  DELETE_EVENT,
+  UPDATE_EVENT
 } from "../actions"
 
 export default (events = {}, action) => {
   switch (action.type) {
+    case CREATE_EVENT:
+    case READ_EVENT:
+    case UPDATE_EVENT:
+    const data = action.responese.data
+    return {...events, [data.id]: data}
     case READ_EVENTS:
       return _.mapKeys(action.responese.data, "id")
     case DELETE_EVENT:
       delete events[action.id]
-      return { ...events }
+      return { ...events}
     default:
       return events
   }
